@@ -6,7 +6,7 @@
 [node name="Level" type="Spatial"]
 
 [node name="Ball" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39799, 2.76108 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.43083, 2.76108 )
 
 [node name="Pitch" parent="." instance=ExtResource( 1 )]
 
