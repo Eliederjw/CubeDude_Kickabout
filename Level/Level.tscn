@@ -16,14 +16,31 @@ extents = Vector3( 12, 5, 0.25 )
 [node name="Game" type="Spatial"]
 script = ExtResource( 6 )
 
-[node name="Player1" parent="." instance=ExtResource( 3 )]
+[node name="StartPositions" type="Node" parent="."]
+
+[node name="BallSpawn" type="Position3D" parent="StartPositions"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+
+[node name="Player1Start" type="Position3D" parent="StartPositions"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0 )
+
+[node name="Player2Start" type="Position3D" parent="StartPositions"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+
+[node name="Player1" parent="." groups=[
+"game_pieces",
+] instance=ExtResource( 3 )]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -4, 0, 0 )
 
-[node name="Player2" parent="." instance=ExtResource( 4 )]
+[node name="Player2" parent="." groups=[
+"game_pieces",
+] instance=ExtResource( 4 )]
 transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 4, 0, 0 )
 
-[node name="Ball" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.778495, 0 )
+[node name="Ball" parent="." groups=[
+"game_pieces",
+] instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="Pitch" parent="." instance=ExtResource( 1 )]
 
@@ -39,21 +56,26 @@ transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -9.1920
 [node name="Goal2" parent="Goals" instance=ExtResource( 5 )]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 9.40802, 0, 0 )
 
-[node name="GoalpostMesh" parent="Goals/Goal2" index="0"]
+[node name="GoalpostMesh" parent="Goals/Goal2" index="1"]
 material/0 = SubResource( 1 )
 
 [node name="Boundaries" type="Node" parent="."]
 
 [node name="Backwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -8.266 )
+visible = false
 collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Backwall"]
 shape = SubResource( 2 )
 
+[node name="BallSpawn" type="Position3D" parent="Boundaries/Backwall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 8.266 )
+
 [node name="Frontwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 8.266 )
+visible = false
 collision_layer = 2
 collision_mask = 5
 
@@ -62,6 +84,7 @@ shape = SubResource( 2 )
 
 [node name="Leftwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -11.2695, 5, 0 )
+visible = false
 collision_layer = 2
 collision_mask = 5
 
@@ -70,6 +93,7 @@ shape = SubResource( 2 )
 
 [node name="Rightwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 11.2725, 5, 0 )
+visible = false
 collision_layer = 2
 collision_mask = 5
 
@@ -78,6 +102,7 @@ shape = SubResource( 2 )
 
 [node name="Backwall Inner" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -6.54822 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -86,6 +111,7 @@ shape = SubResource( 2 )
 
 [node name="Frontwall Inner" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 6.548 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -94,6 +120,7 @@ shape = SubResource( 2 )
 
 [node name="Leftwall Inner Down" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.54281, 5, 4.17294 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -102,6 +129,7 @@ shape = SubResource( 2 )
 
 [node name="Leftwall Inner Goal" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.54281, 5, -0.00122523 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -111,6 +139,7 @@ shape = SubResource( 2 )
 
 [node name="Leftwall Inner Up" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.543, 5, -4.173 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -119,6 +148,7 @@ shape = SubResource( 2 )
 
 [node name="Rightwall Inner Down" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.81509, 5, 4.17294 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -127,6 +157,7 @@ shape = SubResource( 2 )
 
 [node name="Rightwall Inner Goal" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.81509, 5, -0.00122523 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
@@ -136,13 +167,19 @@ shape = SubResource( 2 )
 
 [node name="Rightwall Inner Up" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.8149, 5, -4.173 )
+visible = false
 collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Rightwall Inner Up"]
 shape = SubResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 [connection signal="body_entered" from="Goals/Goal1/GoalDetector" to="." method="_on_GoalDetector_body_entered" binds= [ 2 ]]
 [connection signal="body_entered" from="Goals/Goal2/GoalDetector" to="." method="_on_GoalDetector_body_entered" binds= [ 1 ]]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="Goals/Goal1"]
 

@@ -19,7 +19,7 @@ surfaces/0 = {
 "vertex_count": 224
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=5]
 resource_name = "Arms Cross Walk"
 length = 1.04167
 loop = true
@@ -362,7 +362,7 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-"anims/Arms Cross Walk" = SubResource( 2 )
+"anims/Arms Cross Walk" = SubResource( 5 )
 "anims/Bouncy Walk" = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
