@@ -24,6 +24,7 @@ radius = 0.5
 
 [node name="Player Template" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.818627, 0 )
+collision_mask = 7
 script = ExtResource( 2 )
 
 [node name="Skeleton" type="Skeleton" parent="."]
