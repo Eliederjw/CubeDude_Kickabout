@@ -103,7 +103,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22526, 0 )
 [node name="Pitch" parent="." instance=ExtResource( 1 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.685285, 0.728275, 0, -0.728275, 0.685285, 0, 10.126, 7.783 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60293, 9.41143 )
 environment = ExtResource( 18 )
 current = true
 

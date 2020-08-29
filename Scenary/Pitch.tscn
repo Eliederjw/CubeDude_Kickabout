@@ -11,6 +11,7 @@ material = SubResource( 1 )
 size = Vector2( 22, 16 )
 
 [sub_resource type="BoxShape" id=3]
+margin = 0.08
 extents = Vector3( 11, 0.1, 8 )
 
 [node name="Pitch" type="StaticBody"]
@@ -22,5 +23,5 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.095, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.334624, 0 )
 shape = SubResource( 3 )
