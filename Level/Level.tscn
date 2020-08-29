@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scenary/Pitch.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ball/Ball.tscn" type="PackedScene" id=2]
@@ -17,8 +17,9 @@
 [ext_resource path="res://SFX/airhorn.ogg" type="AudioStream" id=15]
 [ext_resource path="res://Level/SpotLight.gd" type="Script" id=16]
 [ext_resource path="res://Level/DirectionalLight.gd" type="Script" id=17]
+[ext_resource path="res://default_env.tres" type="Environment" id=18]
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=1]
 resource_name = "Fade"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:light_energy")
@@ -33,39 +34,39 @@ tracks/0/keys = {
 "values": [ 1.5, 0.0 ]
 }
 
-[sub_resource type="SpatialMaterial" id=1]
+[sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0, 0.0470588, 0.537255, 1 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 12, 5, 0.25 )
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=4]
 albedo_texture = ExtResource( 8 )
 
-[sub_resource type="PlaneMesh" id=4]
-material = SubResource( 3 )
+[sub_resource type="PlaneMesh" id=5]
+material = SubResource( 4 )
 size = Vector2( 100, 100 )
 
-[sub_resource type="SpatialMaterial" id=5]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 0.654902, 0, 0, 1 )
 roughness = 0.2
 
-[sub_resource type="CubeMesh" id=6]
-material = SubResource( 5 )
+[sub_resource type="CubeMesh" id=7]
+material = SubResource( 6 )
 size = Vector3( 100, 2, 4 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 14 )
 
-[sub_resource type="PlaneMesh" id=8]
-material = SubResource( 7 )
+[sub_resource type="PlaneMesh" id=9]
+material = SubResource( 8 )
 size = Vector2( 98.791, 100 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=10]
 albedo_texture = ExtResource( 13 )
 
-[sub_resource type="PlaneMesh" id=10]
-material = SubResource( 9 )
+[sub_resource type="PlaneMesh" id=11]
+material = SubResource( 10 )
 size = Vector2( 5, 8 )
 
 [node name="Game" type="Spatial"]
@@ -103,30 +104,34 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.22526, 0 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.685285, 0.728275, 0, -0.728275, 0.685285, 0, 10.126, 7.783 )
+environment = ExtResource( 18 )
 current = true
 
-[node name="SpotLight" type="SpotLight" parent="." groups=[
+[node name="Lights" type="Node" parent="."]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Lights" groups=[
+"game_pieces",
+]]
+transform = Transform( 0.743343, -0.514129, 0.427916, 0, 0.639721, 0.768607, -0.66891, -0.571339, 0.475532, 12.3389, 12.1918, 10.9479 )
+light_color = Color( 0.992157, 0.988235, 0.909804, 1 )
+light_energy = 1.5
+shadow_enabled = true
+shadow_color = Color( 0.0196078, 0.0196078, 0.0745098, 1 )
+shadow_bias = 0.0
+script = ExtResource( 17 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Lights/DirectionalLight"]
+anims/Fade = SubResource( 1 )
+
+[node name="SpotLight" type="SpotLight" parent="Lights" groups=[
 "game_pieces",
 ]]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 10.5017, 0 )
 light_energy = 2.0
 shadow_enabled = true
 spot_range = 20.0
-spot_attenuation = 1.0
 spot_angle = 20.0
 script = ExtResource( 16 )
-
-[node name="DirectionalLight" type="DirectionalLight" parent="." groups=[
-"game_pieces",
-]]
-transform = Transform( 0.791095, 0.388421, 0.472543, -0.607962, 0.584462, 0.537388, -0.0674511, -0.712414, 0.69851, 12.3389, 12.1918, 10.9479 )
-light_energy = 1.5
-shadow_enabled = true
-shadow_bias = 0.0
-script = ExtResource( 17 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DirectionalLight"]
-anims/Fade = SubResource( 11 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
@@ -141,7 +146,7 @@ transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, -9.1920
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 9.40802, 0, 0 )
 
 [node name="GoalpostMesh" parent="Goals/Goal2" index="1"]
-material/0 = SubResource( 1 )
+material/0 = SubResource( 2 )
 
 [node name="Boundaries" type="Node" parent="."]
 
@@ -152,7 +157,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Backwall"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="BallSpawn" type="Position3D" parent="Boundaries/Backwall"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 8.266 )
@@ -164,7 +169,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Frontwall"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Leftwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -11.2695, 5, 0 )
@@ -173,7 +178,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Leftwall"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Rightwall" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 11.2725, 5, 0 )
@@ -182,7 +187,7 @@ collision_layer = 2
 collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Rightwall"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Backwall Inner" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -6.54822 )
@@ -191,7 +196,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Backwall Inner"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Frontwall Inner" type="StaticBody" parent="Boundaries"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 6.548 )
@@ -200,7 +205,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Frontwall Inner"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Leftwall Inner Down" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.54281, 5, 4.17294 )
@@ -209,7 +214,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Leftwall Inner Down"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Leftwall Inner Goal" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.54281, 5, -0.00122523 )
@@ -219,7 +224,7 @@ collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Leftwall Inner Goal"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9364, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Leftwall Inner Up" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, -9.543, 5, -4.173 )
@@ -228,7 +233,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Leftwall Inner Up"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Rightwall Inner Down" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.81509, 5, 4.17294 )
@@ -237,7 +242,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Rightwall Inner Down"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Rightwall Inner Goal" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.81509, 5, -0.00122523 )
@@ -247,7 +252,7 @@ collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Rightwall Inner Goal"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9364, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Rightwall Inner Up" type="StaticBody" parent="Boundaries"]
 transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -0.172324, 0, -2.80751e-08, 9.8149, 5, -4.173 )
@@ -256,7 +261,7 @@ collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Boundaries/Rightwall Inner Up"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Decor" type="Node" parent="."]
 
@@ -274,7 +279,7 @@ transform = Transform( 1.6265e-07, 0.998338, 0.0576334, 1, -1.62921e-07, 0, 9.38
 
 [node name="Floor" type="MeshInstance" parent="Decor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0 )
-mesh = SubResource( 4 )
+mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Adverts" parent="Decor" instance=ExtResource( 9 )]
@@ -282,7 +287,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10357, -10.1192 )
 
 [node name="Grandstand" type="MeshInstance" parent="Decor"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04946, -10.0339 )
-mesh = SubResource( 6 )
+mesh = SubResource( 7 )
 material/0 = null
 
 [node name="Bear" parent="Decor" instance=ExtResource( 10 )]
@@ -290,12 +295,12 @@ transform = Transform( -0.731247, 0.682113, -1.11131e-07, 7.36919e-15, -1.62921e
 
 [node name="Backwall" type="MeshInstance" parent="Decor"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -12.2392 )
-mesh = SubResource( 8 )
+mesh = SubResource( 9 )
 material/0 = null
 
 [node name="Painting" type="MeshInstance" parent="Decor"]
-transform = Transform( 0.956269, 4.76524e-08, 0.292489, 0.292489, -1.55796e-07, -0.956269, 0, 1, -1.62921e-07, -5.95773, 7.43827, -11.7944 )
-mesh = SubResource( 10 )
+transform = Transform( 0.956269, 4.76524e-08, 0.292489, 0.292489, -1.55796e-07, -0.956269, 0, 1, -1.62921e-07, -5.95773, 7.43827, -12.0545 )
+mesh = SubResource( 11 )
 material/0 = null
 
 [node name="Airhorn" type="AudioStreamPlayer" parent="."]
